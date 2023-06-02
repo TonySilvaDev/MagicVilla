@@ -4,6 +4,7 @@ using MagicVilla_API.Modelos.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_API.Controllers
 {
@@ -147,6 +148,8 @@ namespace MagicVilla_API.Controllers
         }
 
         [HttpPatch("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDto> patchDto)
         {
             if (patchDto == null || id == 0)
@@ -154,7 +157,7 @@ namespace MagicVilla_API.Controllers
                 return BadRequest();
             }
 
-            var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
+            var villa = _db.Villas.AsNoTracking().FirstOrDefault(v => v.Id == id);
 
             VillaDto villaDto = new()
             {
