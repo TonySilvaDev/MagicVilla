@@ -59,7 +59,7 @@ namespace MagicVilla_API.Repositorio
         public async Task Remover(T entidad)
         {
            dbSet.Remove(entidad);
-            await Grabar();
+           await Grabar();
         }
     }
 }
