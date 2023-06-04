@@ -116,6 +116,9 @@ namespace MagicVilla_API.Controllers
 
                 Villa modelo = _mapper.Map<Villa>(createDto);
 
+                modelo.FechaCreacion = DateTime.Now;
+                modelo.FechaActualizacion= DateTime.Now;
+
                 await _villaRepo.Crear(modelo);
                 _response.Resultado = modelo;
                 _response.statusCode = HttpStatusCode.Created;
