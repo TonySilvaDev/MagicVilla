@@ -185,5 +185,19 @@ namespace MagicVilla_Web.Controllers
 
             return NotFound();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoverNumeroVilla(NumeroVillaDeleteViewModel modelo)
+        {
+            var response = await _numeroVillaService.Remover<APIResponse>(modelo.NumeroVilla.VillaNo);
+
+            if (response != null && response.IsExitoso)
+            {
+                return RedirectToAction(nameof(IndexNumeroVilla));
+            }
+
+            return View(modelo);
+        }
     }
 }
