@@ -13,7 +13,7 @@ namespace MagicVilla_Web.Services
         public NumeroVillaService(IHttpClientFactory httpClient, IConfiguration configuration) :base(httpClient)
         {
             _httpClient= httpClient;
-            _villaUrl = configuration.GetValue<string>("ServiceUrl:API_URL");
+            _villaUrl = configuration.GetValue<string>("ServiceUrls:API_URL");
         }
 
         public Task<T> Actualizar<T>(NumeroVillaUpdateDto dto)
