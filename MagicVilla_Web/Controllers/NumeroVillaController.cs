@@ -120,5 +120,41 @@ namespace MagicVilla_Web.Controllers
 
             return NotFound();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActualizarNumeroVilla(NumeroVillaUpdateViewModel modelo)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _numeroVillaService.Actualizar<APIResponse>(modelo.NumeroVilla);
+
+                if (response != null && response.IsExitoso)
+                {
+                    return RedirectToAction(nameof(IndexNumeroVilla));
+                }
+                else
+                {
+                    if (response.ErrorMessages.Count > 0)
+                    {
+                        ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
+                    }
+                }
+            }
+
+            var res = await _villaService.ObtenerTodos<APIResponse>();
+
+            if (res != null && res.IsExitoso)
+            {
+                modelo.VillaList = JsonConvert.DeserializeObject<List<VillaDto>>(Convert.ToString(res.Resultado))
+                                          .Select(v => new SelectListItem
+                                          {
+                                              Text = v.Nombre,
+                                              Value = v.Id.ToString()
+                                          });
+            }
+
+            return View(modelo);
+        }
     }
 }
