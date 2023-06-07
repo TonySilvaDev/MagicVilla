@@ -91,5 +91,34 @@ namespace MagicVilla_Web.Controllers
 
             return View(modelo);
         }
+
+        public async Task<IActionResult> ActualizarNumeroVilla(int villaNo)
+        {
+            NumeroVillaUpdateViewModel numeroVillaVM = new();
+
+            var response = await _numeroVillaService.Obtener<APIResponse>(villaNo);
+
+            if (response !=null && response.IsExitoso)
+            {
+                NumeroVillaDto modelo = JsonConvert.DeserializeObject<NumeroVillaDto>(Convert.ToString(response.Resultado));
+                numeroVillaVM.NumeroVilla = _mapper.Map<NumeroVillaUpdateDto>(modelo);
+            }
+
+            response = await _villaService.ObtenerTodos<APIResponse>();
+
+            if (response != null && response.IsExitoso)
+            {
+                numeroVillaVM.VillaList = JsonConvert.DeserializeObject<List<VillaDto>>(Convert.ToString(response.Resultado))
+                                          .Select(v => new SelectListItem
+                                          {
+                                              Text = v.Nombre,
+                                              Value = v.Id.ToString()
+                                          });
+
+                return View(numeroVillaVM);
+            }
+
+            return NotFound();
+        }
     }
 }
