@@ -30,6 +30,7 @@ namespace MagicVilla_API.Controllers
             _response = new();
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
