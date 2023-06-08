@@ -9,8 +9,10 @@ using System.Net;
 
 namespace MagicVilla_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class NumeroVillaController : ControllerBase
     {
         private readonly ILogger<NumeroVillaController> _logger;
@@ -49,6 +51,13 @@ namespace MagicVilla_API.Controllers
                 _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
+        }
+
+        [MapToApiVersion("2.0")]
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "valor1", "valor2" };
         }
 
         [HttpGet("{id:int}", Name = "GetNumeroVilla")]
