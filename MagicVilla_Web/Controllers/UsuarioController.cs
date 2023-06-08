@@ -14,14 +14,14 @@ namespace MagicVilla_Web.Controllers
             _usuarioService = usuarioService;
         }
 
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(LoginRequestDto dto)
+        public IActionResult Login(LoginRequestDto dto)
         {
             return View();
         }
