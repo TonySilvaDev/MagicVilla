@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace MagicVilla_API.Controllers
+namespace MagicVilla_API.Controllers.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -122,7 +122,7 @@ namespace MagicVilla_API.Controllers
                 Villa modelo = _mapper.Map<Villa>(createDto);
 
                 modelo.FechaCreacion = DateTime.Now;
-                modelo.FechaActualizacion= DateTime.Now;
+                modelo.FechaActualizacion = DateTime.Now;
 
                 await _villaRepo.Crear(modelo);
                 _response.Resultado = modelo;
@@ -209,7 +209,7 @@ namespace MagicVilla_API.Controllers
                 return BadRequest();
             }
 
-            var villa = await _villaRepo.Obtener(v => v.Id == id, tracked:false);
+            var villa = await _villaRepo.Obtener(v => v.Id == id, tracked: false);
 
             VillaUpdateDto villaDto = _mapper.Map<VillaUpdateDto>(villa);
 
@@ -228,7 +228,7 @@ namespace MagicVilla_API.Controllers
             Villa modelo = _mapper.Map<Villa>(villaDto);
 
             await _villaRepo.Actualizar(modelo);
-            _response.statusCode=HttpStatusCode.NoContent;
+            _response.statusCode = HttpStatusCode.NoContent;
 
             return Ok(_response);
         }

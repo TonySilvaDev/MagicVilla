@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MagicVilla_API.Controllers
+namespace MagicVilla_API.Controllers.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -25,7 +25,7 @@ namespace MagicVilla_API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDto modelo)
         {
             var loginResponse = await _usuarioRepo.Login(modelo);
-            
+
             if (loginResponse.Usuario == null || string.IsNullOrEmpty(loginResponse.Token))
             {
                 _response.statusCode = HttpStatusCode.BadRequest;
