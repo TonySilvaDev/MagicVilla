@@ -4,6 +4,7 @@ using MagicVilla_API.Datos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVilla_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609144631_AgregarTablasIdentity")]
+    partial class AgregarTablasIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,8 +98,8 @@ namespace MagicVilla_API.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Nombres")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Nombres")
+                        .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -185,8 +187,8 @@ namespace MagicVilla_API.Migrations
                             Id = 1,
                             Amenidad = "",
                             Detalle = "Detalle de la villa...",
-                            FechaActualizacion = new DateTime(2023, 6, 9, 8, 50, 47, 344, DateTimeKind.Local).AddTicks(8690),
-                            FechaCreacion = new DateTime(2023, 6, 9, 8, 50, 47, 344, DateTimeKind.Local).AddTicks(8680),
+                            FechaActualizacion = new DateTime(2023, 6, 9, 8, 46, 30, 915, DateTimeKind.Local).AddTicks(4425),
+                            FechaCreacion = new DateTime(2023, 6, 9, 8, 46, 30, 915, DateTimeKind.Local).AddTicks(4414),
                             ImagenUrl = "",
                             MetrosCuadrados = 50,
                             Nombre = "Villa Real",
@@ -198,8 +200,8 @@ namespace MagicVilla_API.Migrations
                             Id = 2,
                             Amenidad = "",
                             Detalle = "Detalle de la villa...",
-                            FechaActualizacion = new DateTime(2023, 6, 9, 8, 50, 47, 344, DateTimeKind.Local).AddTicks(8692),
-                            FechaCreacion = new DateTime(2023, 6, 9, 8, 50, 47, 344, DateTimeKind.Local).AddTicks(8691),
+                            FechaActualizacion = new DateTime(2023, 6, 9, 8, 46, 30, 915, DateTimeKind.Local).AddTicks(4426),
+                            FechaCreacion = new DateTime(2023, 6, 9, 8, 46, 30, 915, DateTimeKind.Local).AddTicks(4426),
                             ImagenUrl = "",
                             MetrosCuadrados = 40,
                             Nombre = "Premium Vista de la Piscina",
