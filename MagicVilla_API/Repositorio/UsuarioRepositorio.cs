@@ -16,14 +16,16 @@ namespace MagicVilla_API.Repositorio
         private readonly ApplicationDbContext _db;
         private string secretKey;
         private readonly UserManager<UsuarioAplicacion> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
 
-        public UsuarioRepositorio(ApplicationDbContext db, IConfiguration configuration, UserManager<UsuarioAplicacion> userManager, IMapper mapper)
+        public UsuarioRepositorio(ApplicationDbContext db, IConfiguration configuration, UserManager<UsuarioAplicacion> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
             secretKey = configuration.GetValue<string>("ApiSettings:Secret");
             _userManager = userManager;
             _mapper = mapper;
+            _roleManager = roleManager;
         }
 
         public bool IsUsuarioUnico(string userName)
@@ -95,6 +97,12 @@ namespace MagicVilla_API.Repositorio
 
                 if (resultado.Succeeded)
                 {
+                    if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("admin"));
+                        await _roleManager.CreateAsync(new IdentityRole("cliente"));
+                    }
+
                     await _userManager.AddToRoleAsync(usuario, "admin");
                     var usuarioAp = _db.UsuariosAplicacion.FirstOrDefault(u => u.UserName == registroRequestDto.UserName);
                     return _mapper.Map<UsuarioDto>(usuarioAp);
